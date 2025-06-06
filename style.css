@@ -1,225 +1,237 @@
+/* Variables de colores basadas en la imagen de referencia */
 :root {
-    --color-primary-dark-purple: #3A3F5B;
-    --color-light-purple: #A8B4DC;
-    --color-light-blue: #C3E0F3;
-    --color-off-white: #F8F8F8;
-    --color-andy-yellow: #FFDD55;
-    --color-andy-orange: #FF9933;
-    --color-accent-green: #B3E0A3; /* Nuevo color para las formas */
-    --color-accent-pink: #FFB3C1;  /* Nuevo color para las formas */
+    --color-text-dark-purple: #3A3F5B; /* Un poco más oscuro que el fondo morado */
+    --color-shape-purple: #A8B4DC; /* El morado claro de las formas */
+    --color-shape-blue: #C3E0F3;   /* El celeste de la forma */
+    --color-background-white: #FFF; /* Blanco puro del fondo principal */
+    --color-andy-yellow: #FFDD55; /* Amarillo de la carita y líneas */
+    --color-andy-orange: #FF9933; /* Naranja de la boca/lengua */
+    /* Colores adicionales para las formas, para que roten por más tonos */
+    --color-shape-green: #B3E0A3;
+    --color-shape-pink: #FFB3C1;
+    --color-shape-light-yellow: #F0E68C; /* Un amarillo más suave */
 }
 
 body {
     margin: 0;
-    font-family: 'Montserrat', sans-serif; /* Fuente principal */
-    overflow: hidden;
-    background-color: var(--color-off-white);
+    font-family: 'Montserrat', sans-serif; /* Fuente general */
+    overflow: hidden; /* Evita scrollbars no deseados */
+    background-color: var(--color-background-white); /* Fondo principal blanco */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
 .hero-section {
     position: relative;
     width: 100%;
-    max-width: 1400px;
-    height: 700px;
-    background-color: #FFF;
+    max-width: 1440px; /* Tamaño generoso para el "lienzo" */
+    height: 800px; /* Altura de la sección principal, ajusta según necesidad */
+    background-color: var(--color-background-white);
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    /* Sombra sutil, como en la imagen que se ve "limpia" */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
+/* Contenedor de las formas de fondo */
 .background-shapes {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 1;
+    pointer-events: none; /* No interactúan con el ratón */
+    z-index: 1; /* Detrás del contenido principal */
 }
 
 .shape {
     position: absolute;
-    opacity: 0.7;
-    /* Los colores iniciales se definen en el HTML SVG fill */
-    /* Las animaciones de movimiento y cambio de color se harán con JS */
+    opacity: 0.7; /* Transparencia para un look suave */
+    /* Posición y tamaño iniciales serán manejados por GSAP o establecidos aquí */
 }
 
-/* Posiciones iniciales de las formas (ajusta según tu diseño) */
-.shape-1 {
-    width: 300px;
+/* Posiciones y tamaños iniciales de las formas (ajustadas visualmente de la imagen) */
+#shape1 { /* Morado grande, arriba izquierda */
+    width: 400px;
+    height: 300px;
+    top: -50px; /* Ligeramente fuera de pantalla para efecto */
+    left: -80px;
+    transform: rotate(-20deg); /* Rotación inicial para que coincida con la imagen */
+}
+
+#shape2 { /* Morado pequeño, abajo izquierda */
+    width: 200px;
+    height: 150px;
+    bottom: -30px;
+    left: 150px;
+    transform: rotate(40deg);
+}
+
+#shape3 { /* Celeste, derecha detrás de la carita */
+    width: 350px;
     height: 250px;
-    top: 10%;
-    left: 5%;
+    top: 150px;
+    right: -100px; /* También ligeramente fuera de pantalla */
+    transform: rotate(-10deg);
 }
 
-.shape-2 {
-    width: 150px;
-    height: 120px;
-    top: 60%;
-    left: 20%;
-}
 
-.shape-3 {
-    width: 250px;
-    height: 180px;
-    top: 30%;
-    right: 10%;
-}
-
+/* Contenedor principal de texto y carita, para centrar y organizar */
 .content-wrapper {
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Por encima de las formas */
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 80%;
-    max-width: 1000px;
-    /* Ocultar inicialmente para animar la entrada con GSAP */
+    justify-content: center; /* Centrar el texto y la cara */
+    width: 90%;
+    max-width: 1200px;
+    padding: 20px;
+    /* Ocultar inicialmente para la animación de entrada con GSAP */
     opacity: 0;
     transform: translateY(20px);
 }
 
 .text-container {
     text-align: left;
-    margin-right: 50px;
+    /* Para que el texto se alinee con la carita en el centro de la página */
+    flex: 1; /* Ocupa el espacio restante */
+    max-width: 600px; /* Limita el ancho del texto */
+    margin-right: 80px; /* Espacio entre texto y carita */
 }
 
 h1 {
-    font-family: 'Fredoka One', cursive; /* Fuente más juguetona para el título */
-    font-size: 4.5em; /* Aumentado para impacto */
-    color: var(--color-primary-dark-purple);
+    font-family: 'Fredoka One', cursive; /* Fuente juguetona */
+    font-size: 5.5em; /* Tamaño grande para impacto, ajusta si es necesario */
+    color: var(--color-text-dark-purple);
     margin: 0;
-    line-height: 1.1;
-    letter-spacing: 3px; /* Más espaciado */
-    text-shadow: 3px 3px 7px rgba(0,0,0,0.15); /* Sombra más pronunciada */
-    /* Animación inicial manejada por GSAP */
-    opacity: 0;
+    line-height: 1.1; /* Espaciado entre líneas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para profundidad */
+    opacity: 0; /* Ocultar para animación de entrada */
     transform: translateY(30px);
 }
 
 p {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.6em;
-    color: var(--color-primary-dark-purple);
+    font-family: 'Montserrat', sans-serif; /* Fuente limpia y legible */
+    font-weight: 500; /* Un poco más de grosor */
+    font-size: 1.8em; /* Tamaño legible */
+    color: var(--color-text-dark-purple);
     opacity: 0.8;
     margin-top: 10px;
-    /* Animación inicial manejada por GSAP */
-    opacity: 0;
+    opacity: 0; /* Ocultar para animación de entrada */
     transform: translateY(30px);
 }
 
-/* --- Carita de Andy y Círculo Punteado --- */
+/* Contenedor de la carita y su círculo */
 .face-container {
     position: relative;
-    width: 350px; /* Tamaño del contenedor de la carita */
-    height: 350px;
+    width: 450px; /* Tamaño del contenedor, para que la carita sea grande */
+    height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 50px;
-    /* Animación inicial manejada por GSAP */
+    flex-shrink: 0; /* Evita que se encoja en pantallas pequeñas */
+    /* Ocultar para animación de entrada */
     opacity: 0;
     transform: scale(0.8);
 }
 
-.dotted-circle-wrapper {
+/* Estilos para el SVG del círculo punteado */
+.dotted-circle-image {
     position: absolute;
-    width: 100%;
+    width: 100%; /* Ocupa todo el contenedor */
     height: 100%;
-    /* Animación de rotación manejada por GSAP */
+    /* Asegura que el SVG mantenga el color de sus paths tal como está en el archivo */
+    /* Si el SVG tiene fill="black" por defecto, GSAP lo cambiará o podrías hacer un ajuste aquí */
 }
 
-/* Asegura que los SVGs dentro de sus contenedores se adapten */
-.dotted-circle-wrapper svg,
-.andy-face svg {
-    width: 100%;
-    height: 100%;
-    display: block; /* Elimina espacio extra debajo de SVGs */
-}
-
-.andy-face {
+/* Estilos para la imagen de la carita de Andy */
+.andy-face-image {
     position: relative; /* Para la animación de "movimiento fijo" */
-    z-index: 3;
-    width: 70%; /* Ajusta el tamaño de la carita dentro de su contenedor */
+    z-index: 3; /* Por encima del círculo punteado */
+    width: 70%; /* Tamaño de la carita dentro de su contenedor (ajusta si es necesario) */
     height: 70%;
-    /* Las animaciones de movimiento fijo se harán con GSAP */
-    transform-origin: center center; /* Asegura que las transformaciones sean desde el centro */
+    object-fit: contain; /* Asegura que la imagen no se distorsione */
+    transform-origin: center center; /* Importante para las animaciones */
 }
 
-/* Media Queries para Responsive Design */
-@media (max-width: 992px) {
+/* --- Media Queries para Responsive Design --- */
+@media (max-width: 1024px) {
     .content-wrapper {
-        flex-direction: column;
+        flex-direction: column; /* Apila el texto y la carita */
         text-align: center;
         width: 90%;
     }
 
     .text-container {
         margin-right: 0;
-        margin-bottom: 40px;
+        margin-bottom: 50px; /* Más espacio entre texto y carita */
     }
 
     h1 {
-        font-size: 3.5em;
-        letter-spacing: 2px;
+        font-size: 4em;
+        letter-spacing: 1.5px;
     }
 
     p {
-        font-size: 1.4em;
+        font-size: 1.5em;
     }
 
     .face-container {
+        width: 350px;
+        height: 350px;
         margin-left: 0;
-        width: 300px;
-        height: 300px;
     }
 
-    .shape-1, .shape-2, .shape-3 {
-        width: 200px;
-        height: 150px;
-    }
+    /* Ajuste de las formas para que no se salgan demasiado en pantallas medianas */
+    #shape1 { top: -20px; left: -40px; width: 300px; height: 225px; }
+    #shape2 { bottom: -10px; left: 100px; width: 150px; height: 112px; }
+    #shape3 { top: 100px; right: -60px; width: 250px; height: 180px; }
 }
 
 @media (max-width: 768px) {
     .hero-section {
-        height: auto;
+        height: auto; /* Altura automática para pantallas pequeñas */
         padding: 50px 20px;
     }
 
     h1 {
-        font-size: 2.5em;
+        font-size: 3em;
         letter-spacing: 1px;
     }
 
     p {
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
 
     .face-container {
-        width: 250px;
-        height: 250px;
+        width: 280px;
+        height: 280px;
     }
 
-    .shape-1 { top: 5%; left: -10%; }
-    .shape-2 { top: 80%; left: 70%; }
-    .shape-3 { top: 20%; right: -10%; }
+    /* Más ajustes para las formas en móviles */
+    #shape1 { top: -10px; left: -20px; width: 250px; height: 187px; }
+    #shape2 { bottom: -5px; left: 50px; width: 120px; height: 90px; }
+    #shape3 { top: 50px; right: -30px; width: 200px; height: 150px; }
 }
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.8em;
+        font-size: 2.2em;
     }
     p {
-        font-size: 0.9em;
+        font-size: 1em;
     }
     .face-container {
-        width: 180px;
-        height: 180px;
+        width: 220px;
+        height: 220px;
     }
+    /* Las formas pueden ser aún más pequeñas o reposicionadas */
+    #shape1 { top: 0; left: -10px; width: 200px; height: 150px; }
+    #shape2 { bottom: 0; left: 30px; width: 100px; height: 75px; }
+    #shape3 { top: 30px; right: -15px; width: 150px; height: 112px; }
 }
